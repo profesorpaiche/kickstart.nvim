@@ -40,20 +40,10 @@ require('lazy').setup({
       scope = { show_start = false, show_end = false }
     },
   },
-  {
-    'nvim-lualine/lualine.nvim',                          -- Set lualine as status line
-    opts = {
-      options = {
-        icons_enabled = false,
-        theme = 'onedark',
-        component_separators = '|',
-        section_separators = '',
-      }
-    }
-  },
 
   -- Settings are further ahead
   'lewis6991/gitsigns.nvim',                              -- Git related plugins
+  'nvim-lualine/lualine.nvim',                            -- Set lualine as status line
   { 'folke/which-key.nvim', opts = {} },                  -- Useful plugin to show you pending keybinds.
   {
     'nvim-telescope/telescope.nvim',                      -- Fuzzy Finder (files, lsp, etc)
@@ -227,6 +217,33 @@ vim.diagnostic.config({
       [vim.diagnostic.severity.HINT] = '+',
     }
   }
+})
+
+-- [[ Configure lualine ]]
+
+require('lualine').setup({
+  options = {
+    icons_enabled = false,
+    theme = 'onedark',
+    component_separators = '|',
+    section_separators = '',
+  },
+  sections = {
+    lualine_a = {'mode'},
+    lualine_b = {
+      'branch',
+      'diff',
+      {
+        'diagnostics',
+        sources = {'nvim_diagnostic', 'nvim_lsp'},
+        symbols = {error = 'X', warn = '!', info = '?', hint = '+'},
+      }
+    },
+    lualine_c = {'filename'},
+    lualine_x = {'encoding', 'fileformat', 'filetype'},
+    lualine_y = {'progress'},
+    lualine_z = {'location'}
+  },
 })
 
 -- [[ Configure gitsigns ]]
