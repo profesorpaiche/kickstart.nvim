@@ -44,7 +44,6 @@ require('lazy').setup({
   -- Settings are further ahead
   'lewis6991/gitsigns.nvim',                              -- Git related plugins
   'nvim-lualine/lualine.nvim',                            -- Set lualine as status line
-  { 'folke/which-key.nvim', opts = {} },                  -- Useful plugin to show you pending keybinds.
   {
     'nvim-telescope/telescope.nvim',                      -- Fuzzy Finder (files, lsp, etc)
     branch = '0.1.x',
@@ -203,8 +202,8 @@ vim.keymap.set("n", "<leader>sa", ":setlocal spell spelllang=es,en<CR>")
 vim.keymap.set("n", "<leader>sx", ":set nospell<CR>")
 
 -- Open keymap file
-vim.keymap.set('n', '<leader>km', ':tabnew ~/.config/nvim/keymaps.md', {desc = 'Open keymaps file in a separate Tab'})
-vim.keymap.set('n', '<leader>kM', ':vsplit ~/.config/nvim/keymaps.md', {desc = 'Open keymaps file in a vertical window'})
+vim.keymap.set('n', '<leader>km', ':tabnew ~/.config/nvim/keymaps.md<CR>', {desc = 'Open keymaps file in a separate Tab'})
+vim.keymap.set('n', '<leader>kM', ':vsplit ~/.config/nvim/keymaps.md<CR>', {desc = 'Open keymaps file in a vertical window'})
 
 -- [[ Configure nvim diagnostics ]]
 
@@ -372,16 +371,6 @@ local on_attach = function(_, bufnr)
     vim.lsp.buf.format()
   end, { desc = 'Format current buffer with LSP' })
 end
-
--- [[ Configure which-key ]]
-
-require('which-key').register {
-  ['<leader>d'] = { name = '[D]ocument', _ = 'which_key_ignore' },
-  ['<leader>g'] = { name = '[G]it', _ = 'which_key_ignore' },
-  ['<leader>f'] = { name = '[S]earch', _ = 'which_key_ignore' },
-  ['<leader>t'] = { name = '[T]oggle', _ = 'which_key_ignore' },
-  ['<leader>w'] = { name = '[W]orkspace', _ = 'which_key_ignore' },
-}
 
 -- [[ Configure mason ]]
 
