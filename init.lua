@@ -323,7 +323,7 @@ vim.defer_fn(function()
       keymaps = {
         init_selection = '<c-space>',
         node_incremental = '<c-i>',
-        node_decremental = '<c-d>'
+        node_decremental = '<c-I>'
       },
     },
     textobjects = {
