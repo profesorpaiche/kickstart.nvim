@@ -18,9 +18,7 @@ vim.opt.rtp:prepend(lazypath)
 require('lazy').setup({
   -- Don't require settings
   'tpope/vim-sleuth',                                     -- Detect tabstop and shiftwidth automatically
-  'ap/vim-css-color',                                     -- HEX colors
-  'vim-pandoc/vim-pandoc',                                -- Markdown Pandoc
-  'vim-pandoc/vim-pandoc-syntax',                         -- Markdown Pandoc syntax
+  'norcalli/nvim-colorizer.lua',                          -- HEX colors
 
   -- Loading default settings
   { 'numToStr/Comment.nvim', opts = {} },                 -- "gc" to comment visual regions/lines
@@ -211,13 +209,17 @@ vim.keymap.set('n', '<leader>kM', ':vsplit ~/.config/nvim/keymaps.md<CR>', {desc
 vim.diagnostic.config({
   signs = {
     text = {
-      [vim.diagnostic.severity.ERROR] = 'X',
+      [vim.diagnostic.severity.ERROR] = 'x',
       [vim.diagnostic.severity.WARN] = '!',
       [vim.diagnostic.severity.INFO] = '?',
       [vim.diagnostic.severity.HINT] = '+',
     }
   }
 })
+
+-- HEX colors
+
+require('colorizer').setup()
 
 -- [[ Configure lualine ]]
 
@@ -236,7 +238,7 @@ require('lualine').setup({
       {
         'diagnostics',
         sources = {'nvim_diagnostic', 'nvim_lsp'},
-        symbols = {error = 'X', warn = '!', info = '?', hint = '+'},
+        symbols = {error = 'x', warn = '!', info = '?', hint = '+'},
       }
     },
     lualine_c = {'filename'},
@@ -311,10 +313,10 @@ vim.keymap.set('n', '<leader>fd', require('telescope.builtin').diagnostics, { de
 
 vim.defer_fn(function()
   require('nvim-treesitter.configs').setup {
-    ensure_installed = { 'lua', 'python', 'vimdoc', 'vim', 'bash', 'r', 'julia', 'html' },
+    ensure_installed = { 'lua', 'python', 'vimdoc', 'vim', 'bash', 'r', 'julia', 'html', 'markdown', 'markdown_inline' },
     auto_install = false,
     sync_install = false,
-    ignore_install = { "markdown", "markdown_inline" },
+    ignore_install = {},
     modules = {},
     highlight = { enable = true },
     indent = { enable = true },
@@ -423,7 +425,7 @@ cmp.setup {
     end,
   },
   completion = {
-    autocomplete = false,
+    -- autocomplete = true,
     completeopt = 'menu,menuone,noinsert',
   },
   mapping = cmp.mapping.preset.insert {
@@ -461,5 +463,3 @@ cmp.setup {
     { name = 'spell' },
   },
 }
-
-vim.keymap.set("i", "<C-x><C-o>", "<Cmd>lua require('cmp').complete()<CR>")
