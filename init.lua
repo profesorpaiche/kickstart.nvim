@@ -25,10 +25,9 @@ require('lazy').setup({
 
   -- Setting options while calling
   {
-    'navarasu/onedark.nvim',                              -- Theme inspired by Atom
-    priority = 1000,
+    'shaunsingh/nord.nvim',                               -- Color scheme
     config = function()
-      vim.cmd.colorscheme 'onedark'
+      vim.cmd.colorscheme('nord')
     end,
   },
   {
@@ -37,6 +36,15 @@ require('lazy').setup({
     opts = {
       scope = { show_start = false, show_end = false }
     },
+  },
+  {
+    'akinsho/bufferline.nvim',                            -- Better tabs
+    version = "*",
+    dependencies = 'nvim-tree/nvim-web-devicons',
+    opts = {
+      options = { mode = 'tabs' },
+      highlights = { fill = { bg = '#2e3440' } }
+    }
   },
 
   -- Settings are further ahead
@@ -91,6 +99,10 @@ require('lazy').setup({
     dependencies = {
       'jmbuhr/otter.nvim',
     }
+  },
+  {
+    "lukas-reineke/headlines.nvim",                       -- Headlines for markdown documents
+    dependencies = "nvim-treesitter/nvim-treesitter"
   }
 }, {})
 
@@ -141,6 +153,7 @@ vim.o.timeoutlen = 300
 
 -- Good colors
 vim.o.termguicolors = true
+vim.o.cursorline = true
 
 -- Buffer movement
 vim.o.scrolloff = 8
@@ -226,7 +239,7 @@ require('colorizer').setup()
 require('lualine').setup({
   options = {
     icons_enabled = false,
-    theme = 'onedark',
+    theme = 'nord',
     component_separators = '|',
     section_separators = '',
   },
@@ -457,9 +470,87 @@ cmp.setup {
     -- end, { 'i', 's' }),
   },
   sources = {
-    { name = 'buffer' },
     { name = 'nvim_lsp' },
+    { name = 'buffer' },
     { name = 'path' },
     { name = 'spell' },
   },
 }
+
+-- [[ Headlines config ]]
+local headlines_style = {
+  headline_highlights = {
+    "Headline1",
+    "Headline2",
+    "Headline3",
+    "Headline4",
+    "Headline5",
+    "Headline6",
+  },
+  codeblock_highlight = "CodeBlock",
+  dash_highlight = "Dash",
+  quote_highlight = "Quote",
+}
+local quarto_style = headlines_style
+quarto_style.query = vim.treesitter.query.parse(
+  "markdown",
+  [[
+    (atx_heading [
+      (atx_h1_marker)
+      (atx_h2_marker)
+      (atx_h3_marker)
+      (atx_h4_marker)
+      (atx_h5_marker)
+      (atx_h6_marker)
+    ] @headline)
+
+    (thematic_break) @dash
+
+    (fenced_code_block) @codeblock
+
+    (block_quote_marker) @quote
+    (block_quote (paragraph (inline (block_continuation) @quote)))
+    (block_quote (paragraph (block_continuation) @quote))
+    (block_quote (block_continuation) @quote)
+  ]]
+)
+
+require('headlines').setup({
+  markdown = headlines_style,
+  rmd = headlines_style,
+  -- quarto = {
+  --   query = vim.treesitter.query.parse(
+  --     "markdown",
+  --     [[
+  --       (atx_heading [
+  --         (atx_h1_marker)
+  --         (atx_h2_marker)
+  --         (atx_h3_marker)
+  --         (atx_h4_marker)
+  --         (atx_h5_marker)
+  --         (atx_h6_marker)
+  --       ] @headline)
+  --
+  --       (thematic_break) @dash
+  --
+  --       (fenced_code_block) @codeblock
+  --
+  --       (block_quote_marker) @quote
+  --       (block_quote (paragraph (inline (block_continuation) @quote)))
+  --       (block_quote (paragraph (block_continuation) @quote))
+  --       (block_quote (block_continuation) @quote)
+  --     ]]
+  --   ),
+  --   headline_highlights = {
+  --     "Headline1",
+  --     "Headline2",
+  --     "Headline3",
+  --     "Headline4",
+  --     "Headline5",
+  --     "Headline6",
+  --   },
+  --   codeblock_highlight = "CodeBlock",
+  --   dash_highlight = "Dash",
+  --   quote_highlight = "Quote",
+  -- }
+})
