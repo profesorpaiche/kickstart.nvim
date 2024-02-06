@@ -18,7 +18,6 @@ vim.opt.rtp:prepend(lazypath)
 require('lazy').setup({
   -- Don't require settings
   'tpope/vim-sleuth',                                     -- Detect tabstop and shiftwidth automatically
-  'norcalli/nvim-colorizer.lua',                          -- HEX colors
 
   -- Loading default settings
   { 'numToStr/Comment.nvim', opts = {} },                 -- "gc" to comment visual regions/lines
@@ -36,15 +35,6 @@ require('lazy').setup({
     opts = {
       scope = { show_start = false, show_end = false }
     },
-  },
-  {
-    'akinsho/bufferline.nvim',                            -- Better tabs
-    version = "*",
-    dependencies = 'nvim-tree/nvim-web-devicons',
-    opts = {
-      options = { mode = 'tabs' },
-      highlights = { fill = { bg = '#2e3440' } }
-    }
   },
 
   -- Settings are further ahead
@@ -250,15 +240,23 @@ require('lualine').setup({
       'diff',
       {
         'diagnostics',
-        sources = {'nvim_diagnostic', 'nvim_lsp'},
+        sources = {'nvim_lsp'},
         symbols = {error = 'x', warn = '!', info = '?', hint = '+'},
       }
     },
-    lualine_c = {'filename'},
+    lualine_c = {{'filename', path = 1}},
     lualine_x = {'encoding', 'fileformat', 'filetype'},
     lualine_y = {'progress'},
     lualine_z = {'location'}
   },
+  tabline = {
+    lualine_a = {{'tabs', mode = 2, use_mode_colors = true}},
+    lualine_b = {},
+    lualine_c = {},
+    lualine_x = {},
+    lualine_y = {'windows'},
+    lualine_z = {}
+  }
 })
 
 -- [[ Configure gitsigns ]]
@@ -438,7 +436,6 @@ cmp.setup {
     end,
   },
   completion = {
-    -- autocomplete = true,
     completeopt = 'menu,menuone,noinsert',
   },
   mapping = cmp.mapping.preset.insert {
