@@ -40,6 +40,7 @@ require('lazy').setup({
   -- Settings are further ahead
   'lewis6991/gitsigns.nvim',                              -- Git related plugins
   'nvim-lualine/lualine.nvim',                            -- Set lualine as status line
+  'norcalli/nvim-colorizer.lua',                          -- HEX colors
   {
     'nvim-telescope/telescope.nvim',                      -- Fuzzy Finder (files, lsp, etc)
     branch = '0.1.x',
