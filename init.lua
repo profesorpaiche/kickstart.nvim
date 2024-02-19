@@ -25,6 +25,7 @@ require('lazy').setup({
   -- Setting options while calling
   {
     'shaunsingh/nord.nvim',                               -- Color scheme
+    priority = 1000,
     config = function()
       vim.cmd.colorscheme('nord')
     end,
@@ -251,7 +252,7 @@ require('lualine').setup({
     lualine_z = {'location'}
   },
   tabline = {
-    lualine_a = {{'tabs', mode = 2, use_mode_colors = true}},
+    lualine_a = {{'tabs', mode = 0, use_mode_colors = true, symbols = {modified = ' ●'}}},
     lualine_b = {},
     lualine_c = {},
     lualine_x = {},
@@ -325,7 +326,7 @@ vim.keymap.set('n', '<leader>fd', require('telescope.builtin').diagnostics, { de
 
 vim.defer_fn(function()
   require('nvim-treesitter.configs').setup {
-    ensure_installed = { 'lua', 'python', 'vimdoc', 'vim', 'bash', 'r', 'julia', 'html', 'markdown', 'markdown_inline' },
+    ensure_installed = { 'lua', 'python', 'vimdoc', 'vim', 'bash', 'r', 'julia', 'html', 'markdown', 'markdown_inline' , 'yaml'},
     auto_install = false,
     sync_install = false,
     ignore_install = {},
