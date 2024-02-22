@@ -90,7 +90,8 @@ require('lazy').setup({
     'quarto-dev/quarto-nvim',                             -- Quarto suit of stuff
     dependencies = {
       'jmbuhr/otter.nvim',
-    }
+    },
+    ft = 'quarto'
   },
   {
     "lukas-reineke/headlines.nvim",                       -- Headlines for markdown documents
